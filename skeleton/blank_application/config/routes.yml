@@ -1,0 +1,32 @@
+rewriteTestRoute:
+  uri: /rewriteTest
+  forward:
+    module: entry
+    action: Index
+
+cpanelConnectTestRoute:
+  uri: /cpanel/connectTest
+  forward:
+    module: cpanel
+    action: ConnectTest
+
+defaultRoute:
+  uri: /:action
+  forward:
+    module: "{%MODULE.ENTRY%}"
+
+moduleRoute:
+  uri: /:module/:action
+
+cpanelRoute:
+  uri: /cpanel/
+  forward:
+    module: cpanel
+    action: LoginForm
+
+frontRoute:
+  uri: /
+  forward:
+    module: "{%MODULE.ENTRY%}"
+    action: Index
+

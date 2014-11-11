@@ -1,0 +1,121 @@
+/**
+ * context
+ */
+
+.phi-context {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 16px;
+  color: #000000;
+  background-color: #ffffff;
+  text-align: left;
+  font-size: 12px;
+}
+
+.phi-context dd {
+  margin: 10px 40px 10px 40px;
+  border: none;
+}
+
+.phi-context code {
+  font-family: "Courier New", Courier, monospace !important;
+}
+
+/**
+ * stack trace
+ */
+
+.phi-exception-trigger {
+  margin-bottom: 2%;
+  border: 1px solid #999999;
+}
+
+.phi-exception-trigger dt {
+  color: #ffffff;
+  padding: 6px 10px 6px 10px;
+  background-color: #999999;
+}
+
+.phi-exception-trigger dd {
+  background-color: #efefef;
+  margin: 0;
+}
+
+.phi-stack-traces .phi-file-info {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.phi-stack-traces dt {
+  font-weight: bold;
+  padding: 6px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: none;
+}
+
+.phi-context .phi-code-inspector {
+  border: 1px solid #999999;
+  padding: 0;
+}
+
+/**
+ * code inspector
+ */
+.phi-code-inspector h2 {
+  font-size: 12px;
+  padding: 6px;
+  margin: 0;
+  background-color: #999999;
+  text-indent: 4px;
+  color: #ffffff;
+}
+
+.phi-stack-trace {
+  background-color: #efefef;
+  margin: 0;
+}
+
+.phi-stack-trace code {
+  border: none;
+  background-color: transparent;
+}
+
+/**
+ * PHI_DebugUtils::output()
+ */
+.phi-debug-output {
+  margin: 20px;
+  border: 1px solid #333333;
+}
+
+.phi-debug-output-header {
+  padding: 6px;
+  text-indent: 10px;
+  background-color: #3C6C92;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.phi-debug-output-container {
+  padding: 10px;
+  height: 300px;
+  overflow: auto;
+}
+
+.phi-debug-output-container .phi-debug-output-message dt {
+  padding: 6px;
+  margin-left: 20px;
+  border-bottom: 1px solid #999999;
+}
+
+.phi-debug-output-container pre {
+  background-color: #efefef;
+  padding: 10px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+

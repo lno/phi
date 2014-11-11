@@ -1,0 +1,44 @@
+action:
+  extension: .do
+
+charset:
+  default: UTF-8
+  mime: ISO-2022-JP
+
+cpanel:
+  password: "{%CPANEL.PASSWORD%}"
+
+database:
+  default:
+    dsn: "mysql:host=localhost; dbname={DB_NAME}; port={PORT}"
+    user: "{DB_USER}"
+    password: "{DB_PASSWORD}"
+
+debug:
+  output: TRUE
+
+exception:
+  - type: Exception
+    delegate: PHI_ExceptionLoggingDelegate
+    continue: TRUE
+
+  - type: Exception
+    delegate: PHI_ExceptionOutputDelegate
+
+language: ja
+
+logger:
+  errorFileAppender:
+    class: PHI_LoggerFileAppender
+    file: error.log
+    rotate:
+      type: date
+      datePattern: Y-m
+
+php:
+  error_log: <?php echo APP_ROOT_DIR . '/logs/fatal_error.log' ?>
+
+project:
+  gitkeep: "{%REPOSITORY.GITKEEP%}"
+
+secretKey: "{%SECRET_KEY%}"

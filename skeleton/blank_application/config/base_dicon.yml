@@ -1,0 +1,15 @@
+componentNames:
+  request:
+    class: PHI_HttpRequest
+
+  response:
+    class: PHI_HttpResponse
+
+  session:
+    class: PHI_HttpSession
+
+  user:
+    class: PHI_AuthorityUser
+
+  view:
+    class: PHI_View
