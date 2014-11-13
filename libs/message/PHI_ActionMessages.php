@@ -61,8 +61,14 @@ class PHI_ActionMessages extends PHI_Object
   {
     static $instance;
 
+    // TODO 統合
     if ($instance === NULL) {
-      $instance = new PHI_ActionMessages();
+      $databaseManagerClass = PHI_Config::getDIContainer()->get('componentNames.messages.class');
+      if ($databaseManagerClass) {
+        $instance = $databaseManagerClass::getInstance();
+      } else {
+        $instance = new PHI_ActionMessages();
+      }
     }
 
     return $instance;
