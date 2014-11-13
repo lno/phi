@@ -1,147 +1,125 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta http-equiv="Content-Language" content="ja" />
-    <meta charset="UTF-8" />
-    <title><?php echo $title ?> - <?php echo $file['file']['name'] ?></title>
-    <link rel="stylesheet" type="text/css" href="../../assets/css/base.css" />
-    <link rel="stylesheet" type="text/css" href="../../assets/css/jquery.treeview.css" />
-    <link rel="apple-touch-icon-precomposed" href="/path/to/icon.png" />
-    <script src="../../assets/js/jquery.min.js" type="text/javascript"></script>
-    <script src="../../assets/js/jquery.cookie.js" type="text/javascript"></script>
-    <script src="../../assets/js/jquery.treeview.js" type="text/javascript"></script>
-    <script src="../../assets/js/phi_api.js" type="text/javascript"></script>
-    <!--[if lt IE 9]>
-    <script src="../../assets/js/html5shiv.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <header>
+<head>
+  <?php echo $html->includeTemplate('includes/head') ?>
+</head>
+<body class="body-class-home body-class-blog">
+  <div id="wrapper">
+    <?php echo $html->includeTemplate('includes/header') ?>
+    <div class="container" style="padding-top: 60px; margin-bottom: 100px;">
       <div class="row">
-        <div class="half">
-          <a href="../../index.html"><img src="../../assets/images/logo.png" alt="phi" /></a>
-        </div>
-        <div class="half">
-          <!--#include virtual="/global_assets/content/navi.php" -->
-        </div>
-      </div>
-      <h1 id="top"><?php echo $title ?></h1>
-    </header>
-    <div id="contents">
-      <div class="row">
-        <!-- quarter -->
-        <div class="quarter">
+        <div class="col-md-3"
+             style="font-size: 16px; padding: 0;" id="side-nav">
           <?php echo $menuTag ?>
         </div>
-        <!-- /quarter -->
-        <!-- threequarter -->
-        <div class="threequarter">
-          <article>
-            <h2><?php echo $file['file']['name'] ?></h2>
-            <p class="right">
-              <a href="#description">Description</a> |
-              <a href="#defines">Defines</a> |
-              <a href="#functions">Functions</a>
-            </p>
+        <div class="col-md-9"
+             style="font-size: 16px; background: white; padding: 50px; margin-top: -60px; border-radius: 0 0 50px 50px;"
+             id="article">
+          <h2><?php echo $file['file']['name'] ?></h2>
+          <p class="right">
+            <a href="#description">Description</a> |
+            <a href="#defines">Defines</a> |
+            <a href="#functions">Functions</a>
+          </p>
 
-            <h3 id="description">Description</h3>
-            <?php if (isset($file['file']['document']['description'])): ?>
-              <?php echo $document->decorateText($file['file']['document']['description']) ?>
-            <?php else: ?>
-              <p>この関数は現在のところ詳細な情報はありません。</p>
-            <?php endif ?>
-              <table>
-                <colgroup>
-                  <col class="col-description-name" />
-                  <col class="col-description-value" />
-                </colgroup>
-                <?php if (isset($file['file']['document']['tags'])): ?>
-                  <?php foreach ($file['file']['document']['tags'] as $type => $tagAttribute): ?>
-                    <?php if (is_array($tagAttribute)): ?>
-                      <?php foreach ($tagAttribute as $description): ?>
-                      <tr>
-                        <th class="left"><?php echo ucfirst($type) ?></th>
-                        <td><?php echo $document->decorateTag($type, $description) ?></td>
-                      </tr>
-                      <?php endforeach ?>
-                    <?php else: ?>
-                      <tr>
-                        <th class="left"><?php echo ucfirst($type) ?></th>
-                        <td><?php echo $document->decorateTag($type, $tagAttribute) ?></td>
-                      </tr>
-                    <?php endif ?>
+          <h3 id="description">Description</h3>
+          <?php if (isset($file['file']['document']['description'])): ?>
+            <?php echo str_replace(['<code>', '</code>'], ['<pre>', '</pre>'], $document->decorateText($file['file']['document']['description'])); ?>
+          <?php else: ?>
+            <p>この関数は現在のところ詳細な情報はありません。</p>
+          <?php endif ?>
+          <table class="table">
+            <colgroup>
+              <col class="col-description-name" />
+              <col class="col-description-value" />
+            </colgroup>
+            <?php if (isset($file['file']['document']['tags'])): ?>
+              <?php foreach ($file['file']['document']['tags'] as $type => $tagAttribute): ?>
+                <?php if (is_array($tagAttribute)): ?>
+                  <?php foreach ($tagAttribute as $description): ?>
+                    <tr>
+                      <th class="left"><?php echo ucfirst($type) ?></th>
+                      <td><?php echo $document->decorateTag($type, $description) ?></td>
+                    </tr>
                   <?php endforeach ?>
-                <?php endif ?>
-                <tr>
-                  <th class="left">Source file</th>
-                  <td><?php echo $file['file']['relativePath'] ?></td>
-                </tr>
-              </table>
-            <p class="right"><a href="#top">To top</a></p>
-
-            <h3 id="defines">Defines</h3>
-            <?php if (isset($file['defines'])): ?>
-              <table>
-                <colgroup>
-                  <col class="col-define-name" />
-                  <col class="col-define-value" />
-                </colgroup>
-                <tr>
-                  <th>Define</th>
-                  <th>Summary</th>
-                </tr>
-                <?php foreach ($file['defines'] as $name => $define): ?>
+                <?php else: ?>
                   <tr>
-                    <td class="left"><?php echo $html->link($name, '#define_' . $name) ?></td>
-                    <td class="left">
-                      <?php if (isset($define['document']['summary'])): ?>
-                        <?php echo $document->decorateText($define['document']['summary']) ?>
+                    <th class="left"><?php echo ucfirst($type) ?></th>
+                    <td><?php echo $document->decorateTag($type, $tagAttribute) ?></td>
+                  </tr>
+                <?php endif ?>
+              <?php endforeach ?>
+            <?php endif ?>
+            <tr>
+              <th class="left">Source file</th>
+              <td><?php echo $file['file']['relativePath'] ?></td>
+            </tr>
+          </table>
+          <p class="right"><a href="#top">To top</a></p>
+
+          <h3 id="defines">Defines</h3>
+          <?php if (isset($file['defines'])): ?>
+            <table class="table">
+              <colgroup>
+                <col class="col-define-name" />
+                <col class="col-define-value" />
+              </colgroup>
+              <tr>
+                <th>Define</th>
+                <th>Summary</th>
+              </tr>
+              <?php foreach ($file['defines'] as $name => $define): ?>
+                <tr>
+                  <td class="left"><?php echo $html->link($name, '#define_' . $name) ?></td>
+                  <td class="left">
+                    <?php if (isset($define['document']['summary'])): ?>
+                      <?php echo $document->decorateText($define['document']['summary']) ?>
+                    <?php endif ?>
+                  </td>
+                </tr>
+              <?php endforeach ?>
+            </table>
+          <?php else: ?>
+            <p>定義されている定数はありません。</p>
+          <?php endif ?>
+          <p class="right"><a href="#top">To top</a></p>
+
+          <h3 id="functions">Functions</h3>
+          <?php if (isset($file['functions'])): ?>
+            <table class="table">
+              <colgroup>
+                <col class="col-function-name" />
+                <col class="col-function-summary" />
+              </colgroup>
+              <tr>
+                <th>Function</th>
+                <th>Summary</th>
+              </tr>
+              <?php foreach ($file['functions'] as $name => $function): ?>
+                <?php if ($function['access'] !== 'private'): ?>
+                  <tr>
+                    <td><?php echo $html->link($name . '()', '#function_' . $name) ?></td>
+                    <td>
+                      <?php if (isset($function['document']['summary'])): ?>
+                        <?php echo $document->decorateText($function['document']['summary']) ?>
                       <?php endif ?>
                     </td>
                   </tr>
-                <?php endforeach ?>
-              </table>
-            <?php else: ?>
-              <p>定義されている定数はありません。</p>
-            <?php endif ?>
-            <p class="right"><a href="#top">To top</a></p>
+                <?php endif ?>
+              <?php endforeach ?>
+            </table>
+          <?php else: ?>
+            <p>定義されている関数はありません。</p>
+          <?php endif ?>
+          <p class="right"><a href="#top">To top</a></p>
 
-            <h3 id="functions">Functions</h3>
-            <?php if (isset($file['functions'])): ?>
-              <table>
-                <colgroup>
-                  <col class="col-function-name" />
-                  <col class="col-function-summary" />
-                </colgroup>
-                <tr>
-                  <th>Function</th>
-                  <th>Summary</th>
-                </tr>
-                <?php foreach ($file['functions'] as $name => $function): ?>
-                  <?php if ($function['access'] !== 'private'): ?>
-                    <tr>
-                      <td><?php echo $html->link($name . '()', '#function_' . $name) ?></td>
-                      <td>
-                        <?php if (isset($function['document']['summary'])): ?>
-                          <?php echo $document->decorateText($function['document']['summary']) ?>
-                        <?php endif ?>
-                      </td>
-                    </tr>
-                  <?php endif ?>
-                <?php endforeach ?>
-              </table>
-            <?php else: ?>
-              <p>定義されている関数はありません。</p>
-            <?php endif ?>
-            <p class="right"><a href="#top">To top</a></p>
-
-            <?php if (isset($file['defines'])): ?>
+          <?php if (isset($file['defines'])): ?>
             <h3>Define details</h3>
-              <dl>
+            <dl>
               <?php foreach ($file['defines'] as $name => $define): ?>
                 <dt id="define_<?php echo $name ?>"><?php echo $name ?></dt>
                 <dd>
-                  <div class="source"><code><?php echo PHI_StringUtils::escape($define['statement']) ?></code></div>
+                  <div class="source"><pre><?php echo PHI_StringUtils::escape($define['statement']) ?></pre></div>
                   <?php if (isset($define['document']['description'])): ?>
                     <?php echo $document->decorateText($define['document']['description']) ?>
                   <?php else: ?>
@@ -150,22 +128,22 @@
                   <p class="right"><a href="#defines">To defines</a></p>
                 </dd>
               <?php endforeach ?>
-              </dl>
-            <?php endif ?>
+            </dl>
+          <?php endif ?>
 
-            <h3>Function details</h3>
-            <dl>
-              <?php foreach ($file['functions'] as $name => $function): ?>
-                <dt id="function_<?php echo PHI_StringUtils::escape($name) ?>"><?php echo PHI_StringUtils::escape($name) ?>()</dt>
-                <dd>
-                  <div class="source"><code><?php echo PHI_StringUtils::escape($function['statement']) ?></code></div>
-                  <?php if (isset($function['document']['description'])): ?>
-                    <?php echo $document->decorateText($function['document']['description']) ?>
-                  <?php else: ?>
-                    <p>この関数は現在のところ詳細な情報はありません。引数のリストのみが記述されています。</p>
-                  <?php endif ?>
-                  <?php if ($function['hasParameter'] || $function['hasReturn']): ?>
-                    <table>
+          <h3>Function details</h3>
+          <dl>
+            <?php foreach ($file['functions'] as $name => $function): ?>
+              <dt id="function_<?php echo PHI_StringUtils::escape($name) ?>"><?php echo PHI_StringUtils::escape($name) ?>()</dt>
+              <dd>
+                <div class="source"><pre><?php echo PHI_StringUtils::escape($function['statement']) ?></pre></div>
+                <?php if (isset($function['document']['description'])): ?>
+                  <?php echo $document->decorateText($function['document']['description']) ?>
+                <?php else: ?>
+                  <p>この関数は現在のところ詳細な情報はありません。引数のリストのみが記述されています。</p>
+                <?php endif ?>
+                <?php if ($function['hasParameter'] || $function['hasReturn']): ?>
+                  <table class="table">
                     <colgroup>
                       <col class="col-parameter-name" />
                       <col class="col-parameter-type" />
@@ -179,15 +157,15 @@
                     <?php foreach ($function['document']['tags'] as $type => $typeAttributes): ?>
                       <?php if ($type === 'param'): ?>
                         <?php foreach ($typeAttributes as $parameter => $tagAttributes): ?>
-                        <tr>
-                          <td><?php echo $parameter ?></td>
-                          <td><?php echo $tagAttributes['type'] ?></td>
-                          <td>
-                            <?php if (isset($tagAttributes['description'])): ?>
-                              <?php echo $document->decorateText($tagAttributes['description']) ?>
-                            <?php endif ?>
-                          </td>
-                        </tr>
+                          <tr>
+                            <td><?php echo $parameter ?></td>
+                            <td><?php echo $tagAttributes['type'] ?></td>
+                            <td>
+                              <?php if (isset($tagAttributes['description'])): ?>
+                                <?php echo $document->decorateText($tagAttributes['description']) ?>
+                              <?php endif ?>
+                            </td>
+                          </tr>
                         <?php endforeach ?>
                       <?php endif ?>
                     <?php endforeach ?>
@@ -204,10 +182,10 @@
                         </tr>
                       <?php endif ?>
                     <?php endforeach ?>
-                    </table>
-                  <?php endif ?>
-                  <?php if ($function['document']['hasExtraTag']): ?>
-                    <ul class="note">
+                  </table>
+                <?php endif ?>
+                <?php if ($function['document']['hasExtraTag']): ?>
+                  <ul class="note">
                     <?php foreach ($function['document']['tags'] as $type => $typeAttribute): ?>
                       <?php if ($type !== 'param' && $type !== 'return'): ?>
                         <?php if (is_array($typeAttribute)): ?>
@@ -219,19 +197,16 @@
                         <?php endif ?>
                       <?php endif ?>
                     <?php endforeach ?>
-                    </ul>
-                  <?php endif ?>
-                  <p class="right"><a href="#functions">To functions</a></p>
-                </dd>
-              <?php endforeach ?>
-            </dl>
-          </div>
-        </article>
-        <!-- /threequarter -->
+                  </ul>
+                <?php endif ?>
+                <p class="right"><a href="#functions">To functions</a></p>
+              </dd>
+            <?php endforeach ?>
+          </dl>
+        </div>
       </div>
-      <!-- /row -->
     </div>
-    <!-- /contents -->
     <?php echo $html->includeTemplate('includes/footer') ?>
-  </body>
+  </div>
+</body>
 </html>

@@ -62,7 +62,6 @@ class PHI_CommandExecutor
       case 'create-project':
         $result = TRUE;
         break;
-
       case 'add-action':
       case 'add-command':
       case 'add-module':
@@ -73,14 +72,11 @@ class PHI_CommandExecutor
       case 'install-database-session':
       case 'install-demo-app':
         $appRootDir = $this->findAppRootDir($this->_currentPath);
-
         if ($appRootDir) {
           $result = TRUE;
           define('APP_ROOT_DIR', $appRootDir);
         }
-
         break;
-
       case 'compress':
       case 'deploy':
       case 'generate-api':
@@ -89,7 +85,6 @@ class PHI_CommandExecutor
       case 'version':
         $result = TRUE;
         define('APP_ROOT_DIR', NULL);
-
         break;
     }
 
@@ -108,66 +103,50 @@ class PHI_CommandExecutor
         case 'add-action':
           $this->executeAddAction();
           break;
-
         case 'add-command':
           $this->executeAddCommand();
           break;
-
         case 'add-module':
           $this->executeAddModule();
           break;
-
         case 'add-theme':
           $this->executeAddTheme();
           break;
-
         case 'clear-cache':
         case 'cc':
           $this->executeClearCache();
           break;
-
         case 'create-project':
           $this->executeCreateProject();
           break;
-
         case 'compress':
           $this->executeCompress();
           break;
-
-        // フレームワーク開発者用
-        case 'deploy':
+        case 'deploy': // フレームワーク開発者用
           $this->executeDeploy();
           break;
-
         case 'generate-api':
           $this->executeGenerateAPI();
           break;
-
         case 'help':
           $this->executeHelp();
           break;
-
         case 'install-database-cache':
           $this->executeInstallDatabaseCache();
           break;
-
         case 'install-database-session':
           $this->executeInstallDatabaseSession();
           break;
-
         case 'install-path':
           $this->executeInstallPath();
           break;
-
         case 'install-demo-app':
           $this->executeInstallDemoApp();
           break;
-
         case 'version':
           $this->executeVersion();
           break;
       }
-
     } else if (strlen($command)) {
       $message = sprintf('Unknown command. [%s]', $command);
       $this->_output->errorLine($message);
@@ -871,17 +850,7 @@ class PHI_CommandExecutor
 
   private function executeDeploy()
   {
-    // cpanel のリソースを最新版に置き換える
-    $sourcePath = PHI_ROOT_DIR . '/docs/manual/assets/css/base.css';
-    $destinationPath = PHI_ROOT_DIR . '/webapps/cpanel/webroot/assets/base/phi/css/base.css';
-    copy($sourcePath, $destinationPath);
-
-    $sourcePath = PHI_ROOT_DIR . '/docs/manual/assets/images/logo.png';
-    $destinationPath = PHI_ROOT_DIR . '/webapps/cpanel/webroot/assets/base/phi/images/logo.png';
-    copy($sourcePath, $destinationPath);
-
-    $outputPath = PHI_ROOT_DIR . '/docs/api';
-
+    $outputPath = PHI_ROOT_DIR . '/api';
     $title = sprintf('phi %s API Reference', PHI_CoreUtils::getVersion(TRUE));
     $this->buildAPI(PHI_LIBS_DIR, $outputPath, $title, array(), TRUE);
   }
