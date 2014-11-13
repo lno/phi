@@ -257,8 +257,8 @@ class PHI_ArrayUtils
         ${$current}[$split[$i]] = ${'_array' . ($i + 1)};
       }
 
-//      $build = $_array0; // TODO TET
-      $build = ${'_array' . 0};
+//      $build = $_array0; // TODO TEST
+      $build = ${'_array0'};
 
     } else {
       $build = array($string => $value);
@@ -378,11 +378,14 @@ class PHI_ArrayUtils
     } else if ($alternative !== NULL) {
       $type = gettype($alternative);
 
+      // TODO 不要そうなら削除する
+      if ($type == 'double') {
+        $type = 'float';
+      }
+
       // $array を $alternative 型にキャストする
       switch ($type) {
-        case 'double':
-          $type = 'float';
-
+        case 'float':
         case 'boolean':
           if (is_string($array)) {
             if (strcasecmp($array, 'TRUE') === 0) {
@@ -394,14 +397,16 @@ class PHI_ArrayUtils
           } else {
             $array = (bool) $array;
           }
-
+          if (gettype($array) !== $type) {
+            settype($array, $type);
+          }
+          break;
         case 'integer':
         case 'string':
         case 'array':
           if (gettype($array) !== $type) {
             settype($array, $type);
           }
-
           break;
       }
     }

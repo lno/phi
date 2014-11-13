@@ -604,7 +604,7 @@ class PHI_FileUtils
    *   コールバック関数は引数に対象パスを持ちます。
    *   パスを結果配列に含める場合は TRUE、含めない場合は FALSE を返して下さい。
    * @return array 対象パスに含まれるファイルリストを配列形式で返します。
-   * @throws IOException 指定されたパスが存在しない場合に発生。
+   * @throws PHI_IOException 指定されたパスが存在しない場合に発生。
    */
   public static function buildFileMappingArray($path, $recursive = TRUE, $callback = NULL)
   {

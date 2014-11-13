@@ -38,7 +38,7 @@ class PHI_ConsoleDialog extends PHI_Object
   private $_sendPrefix;
 
   /**
-   a @var int
+   * @var int
    */
   private $_sendGraphicMode;
 

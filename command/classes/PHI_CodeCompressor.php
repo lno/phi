@@ -1,8 +1,6 @@
 <?php
 class PHI_CodeCompressor
 {
-  private $_compressPath;
-
   public function __construct()
   {
     $this->_compiledDir = PHI_ROOT_DIR . '/libs.compiled';
@@ -93,9 +91,12 @@ class PHI_CodeCompressor
     $source = preg_replace('/^\s+/m', '', $source);
 
     // コメント
-    $source = preg_replace('/^\/\*\*/m', '', $source);
+    $source = preg_replace('/^\/\*.*\n/m', '', $source);
     $source = preg_replace('/^\*.*\n/m', '', $source);
     $source = preg_replace('/^\/\/[^\n]+\n/m', '', $source);
+    $source = preg_replace('/^#.*\n/m', '', $source);
+    $source = preg_replace('/\/\/[^"\'\n]*\n/m', '', $source); // 行末コメント (コメント中に ', " が含まれていた場合は未対応)
+    $source = preg_replace('/#[^"\'\n]*\n/', '', $source); // 行末コメント (コメント中に ', " が含まれていた場合は未対応)
 
     // 空白行
     $source = preg_replace('/^\s*\n/m', '', $source);
@@ -156,6 +157,9 @@ class PHI_CodeCompressor
 
     // PHP タグ
     $source = str_replace("<?php\n", '<?php ', $source);
+
+    // 1行にする
+    $source = preg_replace("/$\n/m", '', $source);
 
     return $source;
   }
