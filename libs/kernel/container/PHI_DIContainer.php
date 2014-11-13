@@ -273,6 +273,8 @@ class PHI_DIContainer
    */
   private function executeSpecialConstructorInjection($newClassName, array $arguments, $size)
   {
+    $result = NULL;
+
     $buffer = NULL;
 
     for ($i = 0; $i < $size; $i++) {

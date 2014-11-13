@@ -15,7 +15,7 @@ $().ready( function () {
 </script>
 <?php if ($slowActions->count()): ?>
   <?php echo $form->start() ?>
-    <div class="right"><?php echo $form->select('orderByAction', array('4' => '平均実行時間が長い', '3' => '表示回数が多い', '5' => '実行時間が長い')) ?></p>
+    <div class="right"><?php echo $form->select('orderByAction', array('4' => '平均実行時間が長い', '3' => '表示回数が多い', '5' => '実行時間が長い')) ?></div>
     <table id="tablesorter_action" class="tablesorter">
       <colgroup>
         <col width="8%" />
