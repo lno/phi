@@ -10,7 +10,7 @@ cpanelConnectTestRoute:
     module: cpanel
     action: ConnectTest
 
-defaultRoute:
+defaultModuleRoute:
   uri: /:action
   forward:
     module: "{%MODULE.ENTRY%}"
@@ -24,7 +24,7 @@ cpanelRoute:
     module: cpanel
     action: LoginForm
 
-frontRoute:
+defaultRoute:
   uri: /
   forward:
     module: "{%MODULE.ENTRY%}"
