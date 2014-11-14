@@ -302,7 +302,7 @@ class PHI_ConfigCompiler extends PHI_Object
       $regexp = str_replace(':module', '(?:[\w\-]+)', $regexp);
 
       // Match pattern is ':foo', ':bar'...
-      $regexp = preg_replace('/:\w+/', '(?:[\w-%]+)', $regexp);
+      $regexp = preg_replace('/:\w+/', '(?:[\w-%.]+)', $regexp);
 
       $keys['regexp'] = sprintf('/^%s$/', $regexp);
 
