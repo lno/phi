@@ -138,7 +138,6 @@ class PHI_FrontController extends PHI_Object
    */
   public function dispatch()
   {
-
     // ルートの探索
     if ($route = $this->_resolver->connect()) {
       $this->_request->setRoute($route);

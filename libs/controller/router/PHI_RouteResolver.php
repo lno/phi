@@ -141,7 +141,7 @@ class PHI_RouteResolver extends PHI_Object
 
               break;
           }
-        } // end for
+        }
 
         $forwardConfig = $routeConfig->get('forward');
 
@@ -176,8 +176,8 @@ class PHI_RouteResolver extends PHI_Object
         $detectedRoute = TRUE;
         break;
 
-      } // end if
-    } // end foreach
+      }
+    }
 
     $route = FALSE;
 
@@ -308,46 +308,40 @@ class PHI_RouteResolver extends PHI_Object
           if (isset($this->_routesConfig[$pathHolder['route']])) {
             $moduleName = $this->_request->getRoute()->getModuleName();
 
-            $uriSegments = explode('/', substr($this->_routesConfig[$pathHolder['route']]['uri'], 1));
-            $j = sizeof($uriSegments);
+            $uri = $this->_routesConfig[$pathHolder['route']]['uri'];
+            if (strlen($uri) > 1) {
+              $uriSegments = explode('/', substr($uri, 1));
+              $j = count($uriSegments);
+              for ($i = 0; $i < $j; $i++) {
+                if (preg_match('/^:(\w+)$/', $uriSegments[$i], $matches)) {
+                  $buildPath .= '/';
 
-            for ($i = 0; $i < $j; $i++) {
-              if (preg_match('/^:(\w+)$/', $uriSegments[$i], $matches)) {
-                $buildPath .= '/';
+                  if ($matches[1] === 'module') {
+                    $buildPath .= $pathHolder['module'];
 
-                if ($matches[1] === 'module') {
-                  $buildPath .= $pathHolder['module'];
+                  } else if ($matches[1] === 'action') {
+                    if ($actionPathFormat === 'underscore') {
+                      $buildPath .= PHI_StringUtils::convertSnakeCase($pathHolder['action']);
+                    } else {
+                      $buildPath .= PHI_StringUtils::convertCamelCase($pathHolder['action']);
+                    }
 
-                } else if ($matches[1] === 'action') {
-                  if ($actionPathFormat === 'underscore') {
-                    $buildPath .= PHI_StringUtils::convertSnakeCase($pathHolder['action']);
+                  } else if (isset($pathHolder[$matches[1]])) {
+                    $buildPath .= urlencode($pathHolder[$matches[1]]);
+
                   } else {
-                    $buildPath .= PHI_StringUtils::convertCamelCase($pathHolder['action']);
+                    $message = sprintf('Path parameter is missing. [%s]', $matches[1]);
+                    throw new PHI_ForwardException($message);
                   }
 
-                } else if (isset($pathHolder[$matches[1]])) {
-                  $buildPath .= urlencode($pathHolder[$matches[1]]);
-
-                } else {
-                  $message = sprintf('Path parameter is missing. [%s]', $matches[1]);
-                  throw new PHI_ForwardException($message);
-                }
-
-              } else {
-
-                // TODO * が指定されていた時におかしくなる？
-                // >>>
-//                $buildPath .= '/' . $uriSegments[$i];
-                // ===
-                // TODO URI に :action の指定がないと、フォワードされた場合に、action が空欄となってしまう
-                if (is_string($path) && $pathHolder['action'] && ($uriSegments[$i] == '' || $uriSegments[$i] == '*')) {
-                  $buildPath .= '/' . $pathHolder['action'];
                 } else {
                   $buildPath .= '/' . $uriSegments[$i];
                 }
-                // <<<
               }
-            }  // end if
+            } else {
+              // uri が1文字以下 => '/'
+              $buildPath .= '/' . $pathHolder['action'];
+            }
 
             if ($absolute) {
               if ($secure === NULL) {
