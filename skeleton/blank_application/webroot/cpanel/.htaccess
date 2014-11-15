@@ -1,3 +1,3 @@
 RewriteEngine on
 RewriteBase /cpanel
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+RewriteRule !\.(js|ico|gif|jpg|png|css|swf|woff|ttf|svg|map)$ index.php
