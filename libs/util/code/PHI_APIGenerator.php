@@ -64,6 +64,36 @@ class PHI_APIGenerator extends PHI_Object
   protected $_documentHelper;
 
   /**
+   * @var string
+   */
+  protected $_indexPageRelativeIndexPath = '';
+
+  /**
+   * @var string
+   */
+  protected $_indexPageRelativeAPIPath = 'reference/';
+
+  /**
+   * @var string
+   */
+  protected $_referencePageRelativeIndexPath = '../../';
+
+  /**
+   * @var string
+   */
+  protected $_referencePageRelativeAPIPath = '../';
+
+  /**
+   * @var string
+   */
+  protected $_fileExtension = '.html';
+
+  /**
+   * @var string
+   */
+  protected $_linkExtension = '.html';
+
+  /**
    * @param string $parseDirectory
    */
   public function __construct($parseDirectory)
@@ -264,11 +294,10 @@ class PHI_APIGenerator extends PHI_Object
    */
   protected function createAnchor($package, $fileName)
   {
-    return sprintf(
-      '%s/%s.html',
-      $package,
-      $fileName
-    );
+    return $package
+         . '/'
+         . $fileName
+         . $this->_linkExtension;
   }
 
   /**
@@ -278,17 +307,19 @@ class PHI_APIGenerator extends PHI_Object
    */
   protected function createReferencePath($package, $fileName)
   {
-    return sprintf(
-      '%s%s%s%s%s%s%s%s',
-      $this->_outputDirectory,
-      DIRECTORY_SEPARATOR,
-      'reference',
-      DIRECTORY_SEPARATOR,
-      $package,
-      DIRECTORY_SEPARATOR,
-      $fileName,
-      '.html'
-    );
+    return $this->_outputDirectory
+         . DIRECTORY_SEPARATOR
+         . 'reference'
+         . DIRECTORY_SEPARATOR
+         . $package
+         . DIRECTORY_SEPARATOR
+         . $fileName
+         . $this->_fileExtension;
+  }
+
+  protected function getLayoutTemplatePath()
+  {
+    return $this->_templateDirectory . DIRECTORY_SEPARATOR . 'layout.php';
   }
 
   /**
@@ -634,31 +665,14 @@ class PHI_APIGenerator extends PHI_Object
   protected function createIndexPage()
   {
     $view = $this->_view;
-    // メニュー部の生成
-    $view->setTemplatePath($this->_templateDirectory . '/includes/menu.php');
-    $view->setAttribute('relativeIndexPath', '');
-    $view->setAttribute('relativeAPIPath', 'reference/');
-    $view->setAttribute('menus', $this->_summaries, FALSE);
-    $menuTag = $view->fetch();
-    $view->clear();
-
-    // コンテンツ部の生成
-    $view->setTemplatePath($this->_templateDirectory . '/includes/index.php');
-    $view->setAttribute('indexPath', 'index.html');
-    $view->setAttribute('relativeIndexPath', '');
-    $view->setAttribute('relativeAPIPath', 'reference/');
+    $view->setTemplatePath($this->getLayoutTemplatePath());
+    $view->setAttribute('contentTemplateName', 'index');
+    $view->setAttribute('indexPath', $this->_indexPageRelativeIndexPath . 'index' . $this->_linkExtension);
+    $view->setAttribute('relativeIndexPath', $this->_indexPageRelativeIndexPath);
+    $view->setAttribute('relativeAPIPath', $this->_indexPageRelativeAPIPath);
+    $view->setAttribute('title', $this->_title);
     $view->setAttribute('menus', $this->_summaries, FALSE);
     $view->setAttribute('document', $this->_documentHelper, FALSE);
-    $contentTag = $view->fetch();
-    $view->clear();
-
-    // レイアウト部の生成
-    $view->setTemplatePath($this->_templateDirectory . '/layout.php');
-    $view->setAttribute('indexPath', 'index.html');
-    $view->setAttribute('relativeIndexPath', '');
-    $view->setAttribute('title', $this->_title);
-    $view->setAttribute('menuTag', $menuTag, FALSE);
-    $view->setAttribute('contentTag', $contentTag, FALSE);
     $contents = $view->fetch();
     $view->clear();
 
@@ -670,28 +684,15 @@ class PHI_APIGenerator extends PHI_Object
    */
   protected function createReferencePage()
   {
-    $view = $this->_view;
-
-    // メニュー部の生成
-    $view->setTemplatePath($this->_templateDirectory . '/includes/menu.php');
-    $view->setAttribute('relativeIndexPath', '../../');
-    $view->setAttribute('relativeAPIPath', '../');
-    $view->setAttribute('menus', $this->_summaries, FALSE);
-    $menuTag = $view->fetch();
-    $view->clear();
-
-    // コンテンツ部の生成
-    $view->setAttribute('indexPath', '../../index.html');
-    $view->setAttribute('title', $this->_title);
-    $view->setAttribute('menuTag', $menuTag, FALSE);
-    $view->setAttribute('relativeIndexPath', '../../');
-    $view->setAttribute('relativeAPIPath', '../');
-    $view->setAttribute('document', $this->_documentHelper, FALSE);
-
-    $functionTemplate = $this->_templateDirectory . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'function.php';
-    $classTemplate    = $this->_templateDirectory . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'class.php';
-    $layoutTemplate   = $this->_templateDirectory . DIRECTORY_SEPARATOR . 'layout.php';
     $data = array();
+    $view = $this->_view;
+    $view->setTemplatePath($this->getLayoutTemplatePath());
+    $view->setAttribute('indexPath', $this->_referencePageRelativeIndexPath . 'index' . $this->_linkExtension);
+    $view->setAttribute('relativeIndexPath', $this->_referencePageRelativeIndexPath);
+    $view->setAttribute('relativeAPIPath', $this->_referencePageRelativeAPIPath);
+    $view->setAttribute('title', $this->_title);
+    $view->setAttribute('menus', $this->_summaries, FALSE);
+    $view->setAttribute('document', $this->_documentHelper, FALSE);
 
     foreach ($this->_pages as $filePath => $fileAttributes) {
       if (isset($fileAttributes['defines'])) {
@@ -704,10 +705,7 @@ class PHI_APIGenerator extends PHI_Object
         foreach ($fileAttributes['functions'] as $name => $functionAttributes) {
           $this->_documentHelper->setFileId($fileAttributes['file']['name']);
           $view->setAttribute('file', $fileAttributes, FALSE);
-          $view->setTemplatePath($functionTemplate);
-          $contentTag = $view->fetch();
-          $view->setTemplatePath($layoutTemplate);
-          $view->setAttribute('contentTag', $contentTag, FALSE);
+          $view->setAttribute('contentTemplateName', 'function');
           $contents = $view->fetch();
 
           $path = $this->createReferencePath($fileAttributes['file']['package'], $fileAttributes['file']['name']);
@@ -735,10 +733,7 @@ class PHI_APIGenerator extends PHI_Object
           $view->setAttribute('class', $classAttributes, FALSE);
 
           $this->_documentHelper->setFileId($classAttributes['name']);
-          $view->setTemplatePath($classTemplate);
-          $contentTag = $view->fetch();
-          $view->setTemplatePath($layoutTemplate);
-          $view->setAttribute('contentTag', $contentTag, FALSE);
+          $view->setAttribute('contentTemplateName', 'class');
           $contents = $view->fetch();
 
           $path = $this->createReferencePath($classAttributes['package'], $classAttributes['name']);
@@ -788,12 +783,10 @@ class PHI_APIGenerator extends PHI_Object
     }
 
     // インデックスページの出力
-    $writePath = sprintf(
-      '%s%s%s',
-      $this->_outputDirectory,
-      DIRECTORY_SEPARATOR,
-      'index.html'
-    );
+    $writePath = $this->_outputDirectory
+               . DIRECTORY_SEPARATOR
+               . 'index'
+               . $this->_fileExtension;
     PHI_FileUtils::writeFile($writePath, $this->_indexData);
 
     // API の出力
