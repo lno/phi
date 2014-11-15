@@ -78,7 +78,6 @@ class PHI_CommandExecutor
         }
         break;
       case 'compress':
-      case 'deploy':
       case 'generate-api':
       case 'help':
       case 'install-path':
@@ -122,9 +121,6 @@ class PHI_CommandExecutor
         case 'compress':
           $this->executeCompress();
           break;
-        case 'deploy': // フレームワーク開発者用
-          $this->executeDeploy();
-          break;
         case 'generate-api':
           $this->executeGenerateAPI();
           break;
@@ -163,10 +159,12 @@ class PHI_CommandExecutor
   {
     $result = FALSE;
 
-    $searchPath = sprintf('%s%sconfig%senv.php',
+    $searchPath = sprintf(
+      '%s%sconfig%senv.php',
       $currentPath,
       DIRECTORY_SEPARATOR,
-      DIRECTORY_SEPARATOR);
+      DIRECTORY_SEPARATOR
+    );
 
     if (is_file($searchPath)) {
       $result = $currentPath;
@@ -269,7 +267,6 @@ class PHI_CommandExecutor
     if ($result) {
       // VCS の設定
       $message = 'Do you want to create a .gitkeep to empty directory? (Y/N)';
-
       if ($dialog->sendConfirm($message)) {
         $isCreateGitkeep = TRUE;
       } else {
@@ -317,7 +314,7 @@ class PHI_CommandExecutor
       // Spyc::YAMLDump() を使うと可視性が下がるのでここでは使用しない
       $path = APP_ROOT_DIR . '/config/application.yml';
 
-      $secretKey = hash('sha1', uniqid(mt_srand(), TRUE));
+      $secretKey = hash('sha1', uniqid(mt_rand(), TRUE));
       $password = PHI_StringUtils::buildRandomString(8, PHI_StringUtils::STRING_CASE_LOWER|PHI_StringUtils::STRING_CASE_NUMERIC);
 
       $contents = file_get_contents($path);
@@ -408,13 +405,16 @@ class PHI_CommandExecutor
 
     PHI_FileUtils::deleteFile('config/global_helpers_merge.yml');
 
-    $message = sprintf("Demo application install completed.\n"
-      ."  - %s%sdemo-front\n"
-      ."  - %s%sdemo-admin\n",
+    $messageFormat = "Demo application install completed.\n"
+                   . "  - %s%sdemo-front\n"
+                   . "  - %s%sdemo-admin\n";
+    $message = sprintf(
+      $messageFormat,
       APP_ROOT_DIR,
       DIRECTORY_SEPARATOR,
       APP_ROOT_DIR,
-      DIRECTORY_SEPARATOR);
+      DIRECTORY_SEPARATOR
+    );
     $this->_output->write($message);
   }
 
@@ -482,7 +482,7 @@ class PHI_CommandExecutor
         }
 
       } while (TRUE);
-    } // end if
+    }
   }
 
   private function parseActionAndCommandArgument($argument)
@@ -633,27 +633,29 @@ class PHI_CommandExecutor
           } catch (Exception $e) {
             $this->_output->errorLine($e->getMessage());
           }
-
-        } // end if
-
-      } // end if
+        }
+      }
 
     } while (TRUE);
 
-    $message = sprintf("Create theme is complete.\n"
-      ."Please add settings to the file.\n"
-      ."%s"
-      ."{config/application.yml}\n"
-      ."theme:\n"
-      ."  name: %s\n"
-      ."  basePath: %s\n"
-      ."  modules: \n    - %s\n"
-      ."%s",
-    $this->_output->getSeparator(),
-    $themeName,
-    $basePathConfig,
-    implode("\n    - ", $modules),
-    $this->_output->getSeparator());
+
+    $messageFormat = "Create theme is complete.\n"
+                   . "Please add settings to the file.\n"
+                   . "%s"
+                   . "{config/application.yml}\n"
+                   . "theme:\n"
+                   . "  name: %s\n"
+                   . "  basePath: %s\n"
+                   . "  modules: \n    - %s\n"
+                   . "%s";
+    $message = sprintf(
+      $messageFormat,
+      $this->_output->getSeparator(),
+      $themeName,
+      $basePathConfig,
+      implode("\n    - ", $modules),
+      $this->_output->getSeparator()
+    );
 
     $this->_output->write($message);
   }
@@ -682,25 +684,29 @@ class PHI_CommandExecutor
     if ($this->createTable('cache/ddl.yml', $dataSourceId)) {
       $separator = $this->_output->getSeparator();
 
-      $message = sprintf("Create database cache is complete.\n\n"
-        ."Please add settings to the file.\n"
-        ."%s"
-        ."{config/application.yml}\n"
-        ."cache:\n"
-        ."  database:\n"
-        ."    dataSource: %s\n"
-        ."%s\n"
-        ."Use:\n"
-        ."%s"
-        ."\$cache = PHI_CacheManager::getInstance(PHI_CacheManager::CACHE_TYPE_DATABASE);\n"
-        ."\$cache->set('foo', \$data);\n"
-        ."echo \$cache->get('foo');\n"
-        ."%s",
+      $messageFormat = "Create database cache is complete.\n"
+                     . "\n"
+                     . "Please add settings to the file.\n"
+                     . "%s"
+                     . "{config/application.yml}\n"
+                     . "cache:\n"
+                     . "  database:\n"
+                     . "    dataSource: %s\n"
+                     . "%s\n"
+                     . "Use:\n"
+                     . "%s"
+                     . "\$cache = PHI_CacheManager::getInstance(PHI_CacheManager::CACHE_TYPE_DATABASE);\n"
+                     . "\$cache->set('foo', \$data);\n"
+                     . "echo \$cache->get('foo');\n"
+                     . "%s";
+      $message = sprintf(
+        $messageFormat,
         $separator,
         $dataSourceId,
         $separator,
         $separator,
-        $separator);
+        $separator
+      );
       $this->_output->write($message);
     }
   }
@@ -712,18 +718,22 @@ class PHI_CommandExecutor
     if ($this->createTable('session/ddl.yml', $dataSourceId)) {
       $separator = $this->_output->getSeparator();
 
-      $message = sprintf("Create database session is complete.\n\n"
-        ."Please add settings to the file.\n"
-        ."%s"
-        ."{config/application.yml}\n"
-        ."session:\n"
-        ."  handler:\n"
-        ."    class: PHI_DatabaseSessionHandler\n"
-        ."    dataSource: %s\n"
-        ."%s",
-      $separator,
-      $dataSourceId,
-      $separator);
+      $messageFormat = "Create database session is complete.\n"
+                     . "\n"
+                     . "Please add settings to the file.\n"
+                     . "%s"
+                     . "{config/application.yml}\n"
+                     . "session:\n"
+                     . "  handler:\n"
+                     . "    class: PHI_DatabaseSessionHandler\n"
+                     . "    dataSource: %s\n"
+                     . "%s";
+      $message = sprintf(
+        $messageFormat,
+        $separator,
+        $dataSourceId,
+        $separator
+      );
 
       $this->_output->write($message);
     }
@@ -811,13 +821,15 @@ class PHI_CommandExecutor
 
     if ($sourcePath === NULL) {
       $buffer = "USAGE: \n"
-       ."  phi generate-api [ARGUMENT] [OPTIONS]\n\n"
-       ."ARGUMENT:\n"
-       ."  source-dir                 Source directory path. (e.g. 'phi generate-api /var/repos/project')\n\n"
-       ."OPTIONS:\n"
-       ."  --output-dir={output_path} Output directory path. (default: {source-dir}/api)\n"
-       ."  --excludes={excludes}      List of exclude directories. (foo,bar,baz...)\n"
-       ."  --title={title}            TItle of API.\n";
+              . "  phi generate-api [ARGUMENT] [OPTIONS]\n"
+              . "\n"
+              . "ARGUMENT:\n"
+              . "  source-dir                 Source directory path. (e.g. 'phi generate-api /var/repos/project')\n"
+              . "\n"
+              . "OPTIONS:\n"
+              . "  --output-dir={output_path} Output directory path. (default: {source-dir}/api)\n"
+              . "  --excludes={excludes}      List of exclude directories. (foo,bar,baz...)\n"
+              . "  --title={title}            TItle of API.\n";
 
       $this->_output->write($buffer);
 
@@ -848,14 +860,7 @@ class PHI_CommandExecutor
     }
   }
 
-  private function executeDeploy()
-  {
-    $outputPath = PHI_ROOT_DIR . '/api';
-    $title = sprintf('phi %s API Reference', PHI_CoreUtils::getVersion(TRUE));
-    $this->buildAPI(PHI_LIBS_DIR, $outputPath, $title, array(), TRUE);
-  }
-
-  private function buildAPI($sourcePath, $outputPath, $title, $excludes = array(), $buildCoreAPI = FALSE)
+  private function buildAPI($sourcePath, $outputPath, $title, $excludes)
   {
     $this->_output->writeLine('Initializing API Generator...');
 
@@ -867,7 +872,7 @@ class PHI_CommandExecutor
     $generator->setExcludeDirectories($excludes);
     $generator->setTitle($title);
     $generator->setOutputDirectory($outputPath);
-    $generator->make($buildCoreAPI);
+    $generator->make(FALSE);
 
     $this->_output->writeLine('Building API...');
     $generator->build();
@@ -887,24 +892,25 @@ class PHI_CommandExecutor
   private function executeHelp()
   {
     $buffer = "USAGE: \n"
-     ."  phi [OPTIONS]\n\n"
-     ."OPTIONS:\n"
-     ."  add-action               Add action to current module.\n"
-     ."                           If you want to use a skeleton template,\n"
-     ."                           please edit '{APP_ROOT_DIR}/templates/html/skeleton.php'.\n"
-     ."  add-command              Add command to current project.\n"
-     ."  add-module               Add module to current project.\n"
-     ."  add-theme                Add theme to current project.\n"
-     ."  clear-cache [cc]         Clear the cache of all.\n"
-     ."  create-project           Create new project.\n"
-     ."  compress                 Compress source of framework.\n"
-     ."  generate-api             Generate API from source code. \n"
-     ."  help                     Show how to use the command.\n"
-     ."  install-database-cache   Create a database cache table. (see: PHI_DatabaseCache class)\n"
-     ."  install-database-session Create a database session table. (see: PHI_DatabaseSessionHandler class)\n"
-     ."  install-demo-app         Install demo application.\n"
-     ."  install-path             Get directory path of the framework.\n"
-     ."  version                  Get version information.";
+            . "  phi [OPTIONS]\n"
+            . "\n"
+            . "OPTIONS:\n"
+            . "  add-action               Add action to current module.\n"
+            . "                           If you want to use a skeleton template,\n"
+            . "                           please edit '{APP_ROOT_DIR}/templates/html/skeleton.php'.\n"
+            . "  add-command              Add command to current project.\n"
+            . "  add-module               Add module to current project.\n"
+            . "  add-theme                Add theme to current project.\n"
+            . "  clear-cache [cc]         Clear the cache of all.\n"
+            . "  create-project           Create new project.\n"
+            . "  compress                 Compress source of framework.\n"
+            . "  generate-api             Generate API from source code. \n"
+            . "  help                     Show how to use the command.\n"
+            . "  install-database-cache   Create a database cache table. (see: PHI_DatabaseCache class)\n"
+            . "  install-database-session Create a database session table. (see: PHI_DatabaseSessionHandler class)\n"
+            . "  install-demo-app         Install demo application.\n"
+            . "  install-path             Get directory path of the framework.\n"
+            . "  version                  Get version information.";
 
     $this->_output->writeLine($buffer);
   }
