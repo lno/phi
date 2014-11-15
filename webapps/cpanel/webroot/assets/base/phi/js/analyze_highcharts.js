@@ -91,9 +91,9 @@ $(document).ready(function(){
   }
 
   jQuery.get(url, null, function(data, status, xhr) {
-    var lines = [], date;
+    var date;
     var statement = {
-      select: [], insert: [], update: [], delete: [], other: []
+      'select': [], 'insert': [], 'update': [], 'delete': [], 'other': []
     };
     var csv = data.split(/\n/g);
 
