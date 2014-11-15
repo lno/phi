@@ -164,7 +164,6 @@ a.list-group-item.active > .badge,
   line-height: 1.6;
   border-radius: 4px;
   padding: 7px 15px 6px 15px;
-  text-transform: uppercase;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-transition: all .25s linear;
   transition: all .25s linear;
@@ -1136,7 +1135,6 @@ fieldset[disabled] .btn-inverse.active {
 .dropdown-header {
   color: #b2c6cd;
   padding: 3px 15px;
-  text-transform: uppercase;
 }
 .dropup .dropdown-menu {
   margin-bottom: 10px;
@@ -2382,7 +2380,6 @@ a.list-group-item-danger.active:focus {
 }
 .tile-profile p {
   color: white;
-  text-transform: uppercase;
 }
 .tile-login {
   background: #364347;
