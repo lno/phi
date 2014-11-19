@@ -15,7 +15,7 @@
       <h1>ログイン</h1>
     </header>
     <div id="contents">
-      <?php echo $form->start('Login') ?>
+      <?php echo $form->start(array('action' => 'Login', 'route' => 'moduleRoute')) ?>
         <?php echo $html->errors(FALSE) ?>
         <?php echo $form->inputPassword('loginPassword', array('size' => 20), array('label' => 'パスワード')) ?>
         <p><?php echo $form->inputSubmit('ログイン', array('class' => 'btn')) ?></p>
