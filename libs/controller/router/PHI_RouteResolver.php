@@ -308,6 +308,8 @@ class PHI_RouteResolver extends PHI_Object
           if (isset($this->_routesConfig[$pathHolder['route']])) {
             $moduleName = $this->_request->getRoute()->getModuleName();
 
+            // ベースパスの生成（ルートURI にアクションの指定がある場合は指定の位置にアクションを差し込む）
+            $isAddActionToBuildPath = FALSE;
             $uri = $this->_routesConfig[$pathHolder['route']]['uri'];
             if (strlen($uri) > 1) {
               $uriSegments = explode('/', substr($uri, 1));
@@ -315,32 +317,54 @@ class PHI_RouteResolver extends PHI_Object
               for ($i = 0; $i < $j; $i++) {
                 if (preg_match('/^:(\w+)$/', $uriSegments[$i], $matches)) {
                   $buildPath .= '/';
-
                   if ($matches[1] === 'module') {
                     $buildPath .= $pathHolder['module'];
-
                   } else if ($matches[1] === 'action') {
                     if ($actionPathFormat === 'underscore') {
                       $buildPath .= PHI_StringUtils::convertSnakeCase($pathHolder['action']);
                     } else {
                       $buildPath .= PHI_StringUtils::convertCamelCase($pathHolder['action']);
                     }
-
+                    $isAddActionToBuildPath = TRUE;
                   } else if (isset($pathHolder[$matches[1]])) {
                     $buildPath .= urlencode($pathHolder[$matches[1]]);
-
                   } else {
                     $message = sprintf('Path parameter is missing. [%s]', $matches[1]);
                     throw new PHI_ForwardException($message);
                   }
-
                 } else {
                   $buildPath .= '/' . $uriSegments[$i];
                 }
               }
-            } else {
-              // uri が1文字以下 => '/'
-              $buildPath .= '/' . $pathHolder['action'];
+            }
+
+            /*
+             * routes.yml で action を forward で指定した場合、パスホルダーからだとアクションを差し込めないので、最後の位置に差し込む。
+             * ルートURIに xxx/:action が設定されている場合、xxx/ をデフォルトアクションにフォワードさせるルーティングがよくなされるので、この場合を救済する処置。
+             * これで事が済むケースが多いが、それでも上手くいかない場合は $path['route'] に目的のルートを指定する。
+             * (※ そもそも、ルートが2通り以上（通常遷移とは別に、フォワードによる遷移もあり得るなど）ある場合は、正常系のルートを定めて指定する必要がある。)
+             *
+             * TODO ルートURI に :action が含まれていない場合、他のルート設定に "{現在のルートURI}/:action" の設定がないかを走査し、存在する場合のみこの処理を行うか検討。（無い場合はルート設定を見直す or $path['route'] の指定を促す開発用例外を発生させる）
+             */
+            // TODO 試験 >>>
+            if (!$isAddActionToBuildPath) {
+              $pathAction = $pathHolder['action'];
+              if (!PHI_StringUtils::nullOrEmpty($pathAction)) {
+                if (substr($buildPath, -1) == '/') {
+                  $buildPath .= $pathAction;
+                } else {
+                  $buildPath .= '/' . $pathAction;
+                }
+              }
+            }
+            // TODO 試験 <<<
+
+            if (substr($buildPath, -1) !== '/') {
+              $buildPath .= $this->_applicationConfig->getString('action.extension');
+            }
+
+            if ($fragment !== NULL) {
+              $buildPath .= $fragment;
             }
 
             if ($absolute) {
@@ -354,14 +378,6 @@ class PHI_RouteResolver extends PHI_Object
               $buildPath = $scheme . $this->_request->getHost() . $buildPath;
             }
 
-            if (substr($buildPath, -1) !== '/') {
-              $buildPath .= $this->_applicationConfig->getString('action.extension');
-            }
-
-            if ($fragment !== NULL) {
-              $buildPath .= $fragment;
-            }
-
             if (sizeof($queryData)) {
               $buildPath = sprintf('%s?%s', $buildPath, http_build_query($queryData, '', '&amp;'));
             }
@@ -373,8 +389,9 @@ class PHI_RouteResolver extends PHI_Object
         } else {
           $buildPath = $path;
         }
-
-      } // end if
+      } else {
+        $buildPath = $path;
+      }
     } else {
       $buildPath = $path;
     }
