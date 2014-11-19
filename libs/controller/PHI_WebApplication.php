@@ -55,7 +55,7 @@ abstract class PHI_WebApplication extends PHI_Object
   /**
    * レスポンス (response) コンポーネントを取得します。
    *
-   * @return PHI_HttpRequest PHI_HttpResponse を実装したオブジェクトのインスタンスを返します。
+   * @return PHI_HttpResponse PHI_HttpResponse を実装したオブジェクトのインスタンスを返します。
    * @see PHI_DIContainer::getComponent()
    */
   public function getResponse()

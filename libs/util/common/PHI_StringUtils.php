@@ -251,7 +251,7 @@ class PHI_StringUtils
    * 文字列 string を camelCaps 記法に変換します。
    *
    * @param string $string 変換対象の文字列。
-   * @return camelCaps 形式に変換した文字列を返します。
+   * @return string camelCaps 形式に変換した文字列を返します。
    */
   public static function convertCamelCase($string)
   {
