@@ -296,6 +296,8 @@ class PHI_RouteResolver extends PHI_Object
       } else {
         if (strpos($path, 'http://') !== FALSE || strpos($path, 'https://') !== FALSE) {
           $externalLink = TRUE;
+        } else if (strpos($path, 'javascript:') !== FALSE) {
+          $externalLink = TRUE;
         }
       }
 
