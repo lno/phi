@@ -24,6 +24,11 @@ class PHI_Console extends PHI_Object
   private $_commandName;
 
   /**
+   * @var PHI_ConsoleOutput
+   */
+  private $_output;
+
+  /**
    * コンストラクタ。
    */
   private function __construct()
@@ -63,14 +68,14 @@ class PHI_Console extends PHI_Object
       require $commandPath;
 
       $this->_commandName = $input->getCommandName(TRUE);
-      $output = new PHI_ConsoleOutput();
+      $this->_output = new PHI_ConsoleOutput();
       $configure = new PHI_ConsoleInputConfigure();
 
       if ($input->hasCoreOption('silent')) {
-        $output->setSilentMode(TRUE);
+        $this->_output->setSilentMode(TRUE);
       }
 
-      $commandClass = new $this->_commandName($input, $output);
+      $commandClass = new $this->_commandName($input, $this->_output);
       $commandClass->configure($configure);
 
       $input->validate($configure);
@@ -81,6 +86,16 @@ class PHI_Console extends PHI_Object
     } else {
       $this->showUsage();
     }
+  }
+
+  /**
+   * 実行中のコマンドの出力オブジェクトを取得します。
+   *
+   * @return PHI_ConsoleOutput 実行中のコマンドの出力オブジェクトを返します。
+   */
+  public function getOutput()
+  {
+    return $this->_output;
   }
 
   /**
