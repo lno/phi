@@ -25,7 +25,7 @@ abstract class PHI_Pager extends PHI_Object
    * {@link PHI_Pager} オブジェクト。
    * @var PHI_Pager
    */
-  static protected $_instance = NULL;
+  static protected $_instance = [];
 
   /**
    * リクエストオブジェクト。
@@ -208,17 +208,17 @@ abstract class PHI_Pager extends PHI_Object
   /**
    * PHI_Pager を実装したクラスのインスタンスを生成します。
    *
-   * @return PHI_Pager PHI_Pager を実装したクラスのインスタンスを返します。
+   * @return static PHI_Pager を実装したクラスのインスタンスを返します。
    */
   public static function getInstance()
   {
     $className = get_called_class();
 
-    if (self::$_instance === NULL) {
-      self::$_instance = new $className;
+    if (self::$_instance[$className] === NULL) {
+      self::$_instance[$className] = new $className;
     }
 
-    return self::$_instance;
+    return self::$_instance[$className];
   }
 
   /**
