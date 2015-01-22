@@ -22,7 +22,7 @@ class PHI_RequestHelper extends PHI_Helper
   /**
    * @var PHI_HttpRequest
    */
-  private $_request;
+  protected $_request;
 
   /**
    * @see PHI_Helper::__construct()

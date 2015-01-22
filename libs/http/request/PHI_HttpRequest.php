@@ -1163,4 +1163,23 @@ class PHI_HttpRequest extends PHI_Object
 
     return FALSE;
   }
+
+  /**
+   * 最後に実行されたアクション情報を返します。
+   *
+   * @return PHI_Action|null
+   */
+  public function getCurrentAction()
+  {
+    $action = NULL;
+
+    if ($this->getRoute()
+      && $this->getRoute()->getForwardStack()
+      && $this->getRoute()->getForwardStack()->getLast()
+    ) {
+      $action = $this->getRoute()->getForwardStack()->getLast()->getAction();
+    }
+
+    return $action;
+  }
 }
