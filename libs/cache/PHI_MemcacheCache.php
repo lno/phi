@@ -83,7 +83,7 @@ class PHI_MemcacheCache extends PHI_Cache
     $key = $this->getCachePath($name, $namespace);
     $array = serialize(array($value, $_SERVER['REQUEST_TIME']));
 
-    return $this->_memcache->set($key, $array, 0, $expire);
+    return $this->_memcache->set($key, $array, $this->_compressed, $expire);
   }
 
   /**

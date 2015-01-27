@@ -229,8 +229,6 @@ class PHI_DatabaseStatement extends PHI_Object
    */
   public function execute(array $bindValues = array())
   {
-    $compare = substr(trim($this->_query), 0, 6);
-
     return $this->executeStatement($bindValues, TRUE);
   }
 
