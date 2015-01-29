@@ -1,6 +1,11 @@
 <?php
 Class StringUtil
 {
+  public static function nvl($string, $alt = '')
+  {
+    return ($string === NULL) ? $alt : $string;
+  }
+
   /**
    * @param $string
    * @return bool
@@ -84,9 +89,13 @@ Class StringUtil
     return $encodeString;
   }
 
-  public static function split($string)
+  public static function split($string, $delimiter = NULL)
   {
-    return str_split($string);
+    if ($delimiter === NULL) {
+      return str_split($string);
+    } else {
+      return explode($delimiter, $string);
+    }
   }
 
   public static function jsonDecode($string, $assoc = FALSE)

@@ -35,11 +35,6 @@ class ArrayUtil
     return implode($delimiter, $list);
   }
 
-  public static function split(array $list, $delimiter)
-  {
-    return explode($delimiter, $list);
-  }
-
   public static function isEmpty(array $list)
   {
     $result = TRUE;
