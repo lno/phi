@@ -59,6 +59,22 @@ class ArrayUtil
     return !ArrayUtil::isEmpty($list);
   }
 
+  public static function in(array $list, $value)
+  {
+    if (is_array($value)) {
+      $isIn = FALSE;
+      foreach ($value as $val) {
+        if (ArrayUtil::in($list, $val)) {
+          $isIn = TRUE;
+          break;
+        }
+      }
+      return $isIn;
+    } else {
+      return in_array($value, $list);
+    }
+  }
+
   public static function deleteValue(array &$list, $value)
   {
     $deleteKeyList = [];
