@@ -114,6 +114,14 @@ Class StringUtil
     return (strlen($string) !== mb_strlen($string,'utf8'));
   }
 
+  public static function escapePregStatement($string)
+  {
+    $search = ['\\', '/', '^', '.', '$', '*', '?', '|', '(', ')', '[', ']', '{', '}'];
+    $replace = ['\\\\', '\/', '\^', '\.', '\$', '\*', '\?', '\|', '\(', '\)', '\[', '\]', '\{', '\}'];
+
+    return str_replace($search, $replace, $string);
+  }
+
   /**
    * @param $string
    * @param $pattern
