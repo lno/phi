@@ -127,6 +127,26 @@ class PHI_DatabaseStatement extends PHI_Object
    *   名前付きプレースホルダの場合は :name 形式、疑問符プレースホルダを使用する場合は 1 から始まるパラメータの位置を指定。
    * @param mixed $value バインド変数値。
    * @param int $dataType データタイプ。PDO::PARAM_* 定数を指定可能。
+   * @return $this
+   * @throws PHI_Exception
+   */
+  public function bind($name, $value, $dataType = PDO::PARAM_STR)
+  {
+    if (!$this->bindValue($name, $value, $dataType)) {
+      throw new PHI_Exception('Bind value error occurred.');
+    }
+
+    return $this;
+  }
+
+  /**
+   * ステートメントに変数をバインドします。
+   * このメソッドの実装は、{@link PDO::bindValue()} に依存しています。
+   *
+   * @param string $name バインド変数名。
+   *   名前付きプレースホルダの場合は :name 形式、疑問符プレースホルダを使用する場合は 1 から始まるパラメータの位置を指定。
+   * @param mixed $value バインド変数値。
+   * @param int $dataType データタイプ。PDO::PARAM_* 定数を指定可能。
    * @return bool バインドに成功した場合は TRUE、失敗した場合は FALSE を返します。
    */
   public function bindValue($name, $value, $dataType = PDO::PARAM_STR)
