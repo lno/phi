@@ -1,9 +1,9 @@
 <?php
 Class StringUtil
 {
-  public static function nvl($string, $alt = '')
+  public static function get($string, $alt = '')
   {
-    return ($string === NULL) ? $alt : $string;
+    return StringUtil::isEmpty($string) ? $alt : $string;
   }
 
   /**
@@ -26,30 +26,34 @@ Class StringUtil
 
   /**
    * @param string $string
-   * @param string $searchWord
+   * @param string|array $search
    * @return bool
    */
-  public static function hasString($string, $searchWord)
+  public static function has($string, $search, $orSearch = TRUE)
   {
-    return strpos($string, $searchWord) !== FALSE;
-  }
-
-  /**
-   * @param $string
-   * @return bool|string
-   */
-  public static function formatDateW3C($string)
-  {
-    return date('Y-m-d\TH:i:sP', strtotime($string));
-  }
-
-  /**
-   * @param $string
-   * @return bool|string
-   */
-  public static function formatRssPubDate($string)
-  {
-    return date('D, d M Y H:i:s O', strtotime($string));
+    if (is_array($search)) {
+      if ($orSearch) {
+        $result = FALSE;
+        foreach ($search as $word) {
+          if (StringUtil::has($string, $word, $orSearch)) {
+            $result = TRUE;
+            break;
+          }
+        }
+      } else {
+        $result = TRUE;
+        foreach ($search as $word) {
+          if (!StringUtil::has($string, $word, $orSearch)) {
+            $result = FALSE;
+            break;
+          }
+        }
+      }
+      return $result;
+    } else {
+      // search を文字列として処理
+      return strpos($string, $search) !== FALSE;
+    }
   }
 
   /**
@@ -62,31 +66,13 @@ Class StringUtil
     $hasString = FALSE;
 
     foreach ($searchWords as $searchWord) {
-      if (self::hasString($string, $searchWord)) {
+      if (self::has($string, $searchWord)) {
         $hasString = TRUE;
         break;
       }
     }
 
     return $hasString;
-  }
-
-  public static function toDate($string, $format = 'Y-m-d')
-  {
-    return date($format, strtotime($string));
-  }
-
-  public static function getEncoding($string)
-  {
-    return mb_detect_encoding($string, 'UTF-8,ASCII,JIS,EUC-JP,SJIS,CP51932,SJIS-WIN');
-  }
-
-  public static function mbConvertEncoding($string)
-  {
-    mb_internal_encoding('UTF-8');
-    $encodeString = mb_convert_encoding($string, 'UTF-8', StringUtil::getEncoding($string));
-
-    return $encodeString;
   }
 
   public static function split($string, $delimiter = NULL)
@@ -98,7 +84,7 @@ Class StringUtil
     }
   }
 
-  public static function jsonDecode($string, $assoc = FALSE)
+  public static function decodeJson($string, $assoc = FALSE)
   {
     $string = htmlspecialchars_decode($string);
     return json_decode($string, $assoc);
@@ -109,7 +95,7 @@ Class StringUtil
     return trim(preg_replace($trimPattern, '', $string));
   }
 
-  public static function hasJapaneseString($string)
+  public static function hasMultiByteString($string)
   {
     return (strlen($string) !== mb_strlen($string,'utf8'));
   }
@@ -130,5 +116,42 @@ Class StringUtil
   public static function match($string, $pattern)
   {
     return preg_match($pattern, $string) === 1;
+  }
+
+  /**
+   * @param $string
+   * @return bool|string
+   */
+  public static function formatDateW3C($string)
+  {
+    return date('Y-m-d\TH:i:sP', strtotime($string));
+  }
+
+  /**
+   * @param $string
+   * @return bool|string
+   */
+  public static function formatRssPubDate($string)
+  {
+    return date('D, d M Y H:i:s O', strtotime($string));
+  }
+
+
+  public static function toDate($string, $format = 'Y-m-d')
+  {
+    return date($format, strtotime($string));
+  }
+
+  public static function getEncoding($string)
+  {
+    return mb_detect_encoding($string, 'UTF-8,ASCII,JIS,EUC-JP,SJIS,CP51932,SJIS-WIN');
+  }
+
+  public static function mbConvertEncoding($string)
+  {
+    mb_internal_encoding('UTF-8');
+    $encodeString = mb_convert_encoding($string, 'UTF-8', StringUtil::getEncoding($string));
+
+    return $encodeString;
   }
 }
