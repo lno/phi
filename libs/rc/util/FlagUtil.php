@@ -11,6 +11,6 @@ class FlagUtil
 
   public static function disabled($flag)
   {
-    return ($flag === 0);
+    return ($flag == 0);
   }
 }
