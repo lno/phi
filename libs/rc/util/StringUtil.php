@@ -90,9 +90,13 @@ Class StringUtil
     return json_decode($string, $assoc);
   }
 
-  public static function pregTrim($string, $trimPattern)
+  public static function trim($string, $trimPattern = NULL)
   {
-    return trim(preg_replace($trimPattern, '', $string));
+    if ($trimPattern === NULL) {
+      return trim($string);
+    } else {
+      return trim(preg_replace($trimPattern, '', $string));
+    }
   }
 
   public static function hasMultiByteString($string)
