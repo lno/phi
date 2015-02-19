@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package rc.util
+ */
 Class StringUtil
 {
   public static function get($string, $alt = '')

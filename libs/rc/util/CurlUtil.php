@@ -1,6 +1,6 @@
 <?php
 /**
- * @package libs.util
+ * @package rc.util
  */
 class CurlUtil
 {
