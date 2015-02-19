@@ -26,6 +26,11 @@ class FileUtil
     return $fileCount;
   }
 
+  public static function getFileName($filePath)
+  {
+    return substr(strrchr($filePath, '/'), 1);
+  }
+
   public static function downloadSftpFile($savePath, $ftpFilePath, $host, $user, $password)
   {
     $fileContents = CurlUtil::fileGetContentsBySftp(
