@@ -23,7 +23,7 @@ class FileUtil
       $fileCount = count($dirFileList);
     }
 
-    return$fileCount;
+    return $fileCount;
   }
 
   public static function downloadSftpFile($savePath, $ftpFilePath, $host, $user, $password)
