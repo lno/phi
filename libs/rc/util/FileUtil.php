@@ -26,6 +26,19 @@ class FileUtil
     return$fileCount;
   }
 
+  public static function downloadSftpFile($savePath, $ftpFilePath, $host, $user, $password)
+  {
+    $fileContents = CurlUtil::fileGetContentsBySftp(
+      $ftpFilePath,
+      $host,
+      $user,
+      $password
+    );
+    $writer = new PHI_FileWriter($savePath, FALSE);
+    $writer->write($fileContents);
+    $writer->close();
+  }
+
   /**
    * @param $filePath
    * @return string

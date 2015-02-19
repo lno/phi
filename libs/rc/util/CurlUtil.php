@@ -18,7 +18,7 @@ class CurlUtil
     return $result;
   }
 
-  public static function fileGetContentsBySFTP($path, $host, $user = NULL, $password = NULL)
+  public static function fileGetContentsBySftp($path, $host, $user = NULL, $password = NULL)
   {
     $filePath = "sftp://$host$path";
 
