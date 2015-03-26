@@ -35,7 +35,7 @@ $().ready( function () {
   <?php echo $form->start() ?>
     <h2>リクエスト一覧</h2>
     <div class="request-path-list">
-      <table id="tablesorter_action_<?php echo $hash ?>" class="tablesorter">
+      <table id="tablesorter_action_<?php echo $hash ?>" class="tablesorter table table-striped">
         <colgroup>
           <col width="32%" />
           <col width="6%" />

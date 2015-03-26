@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta http-equiv="Content-Language" content="ja" />
-    <meta charset="UTF-8" />
-    <title>cPanel - ログイン</title>
-    <?php echo $html->includeCSS('/assets/base/phi/css/base.css') ?>
-    <!--[if lt IE 9]>
-    <script src="/assets/js/html5shiv.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <header>
-      <?php $html->includeTemplate('includes/header'); ?>
-      <h1>ログイン</h1>
-    </header>
-    <div id="contents">
-      <?php echo $form->start(array('action' => 'Login', 'route' => 'moduleRoute')) ?>
-        <?php echo $html->errors(FALSE) ?>
-        <?php echo $form->inputPassword('loginPassword', array('size' => 20), array('label' => 'パスワード')) ?>
-        <p><?php echo $form->inputSubmit('ログイン', array('class' => 'btn')) ?></p>
-      <?php echo $form->close() ?>
+<html>
+<head><?php $html->includeTemplate('/includes/head'); ?></head>
+<body class="body-class-home body-class-blog">
+  <div id="wrapper">
+    <?php $html->includeTemplate('/includes/header'); ?>
+    <div id="login" class="container">
+      <div class="row">
+        <div class="hidden-xs hidden-sm col-md-4"><img class="featurette-image img-responsive" alt="" src="/assets/base/phi/images/logo2.png"></div>
+        <div class="col-xs-12 col-sm-8">
+        <?php echo $html->errors(FALSE); ?>
+          <h2 class="featurette-heading">ログ<span class="text-muted">イン</span></h2>
+          <?php echo $form->start(array('action' => 'Login', 'route' => 'moduleRoute')); ?>
+            <input id="loginPassword" name="loginPassword" class="form-control" type="password" placeholder="Enter your password">
+            <p class="lead"><?php echo $form->inputSubmit('ログイン', array('class' => 'btn')); ?></p>
+          <?php echo $form->close(); ?>
+        </div>
+      </div>
     </div>
-    <footer>
-      <?php $html->includeTemplate('includes/footer') ?>
-    </footer>
-  </body>
+    <?php $html->includeTemplate('includes/footer'); ?>
+  </div>
+</body>
 </html>

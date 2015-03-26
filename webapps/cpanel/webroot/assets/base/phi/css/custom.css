@@ -1,0 +1,170 @@
+@font-face {
+  font-family: 'UtsukushiMincho';
+  src: url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.eot'); /* IE9以上用 */
+  src: url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.eot?#iefix') format('embedded-opentype'), /* IE8以前用 */
+       url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.woff') format('woff'), /* モダンブラウザ用 */
+       url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.ttf') format('truetype'); /* iOS, Android用 */
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  padding: 0;
+  background: #fff;
+}
+body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .btn { font-family: 'UtsukushiMincho'; }
+.Righteous { font-family: 'Righteous', cursive; }
+#wrapper { padding: 74px 0 0; }
+#header {
+  background: #f3bc65;
+  margin: 0;
+}
+.header-top { background: #f3bc65; }
+#nav ul, #side-nav ul { font-size: 16px; }
+#nav ul li a{ border: 1px solid #f3bc65; }
+.navbar { border-radius: 0; }
+.btn { font-weight: bold; }
+.logo { font-family: 'Righteous', cursive; }
+.logo img {
+  height: 38px;
+  margin-right: 10px;
+}
+.footer-holder p { color: #5e696d; }
+.featurette-image {
+  width: 300px;
+  margin: 0 auto;
+}
+.featurette-heading {
+  font-size: 36px;
+  margin-top: 100px;
+}
+.lead { font-size: 20px; }
+
+/* divider */
+.divider1 { margin: 30px 0 0; }
+.divider2 { margin: 30px 0 60px }
+
+/* page-top */
+#page-top {
+  position: fixed;
+  bottom: 30px;
+  right: 50px;
+}
+#page-top a {
+  background: #f3bc65;
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 12px;
+  text-align: center;
+  display: block;
+  border-radius: 4px;
+  font-size: 14px;
+}
+#page-top a:hover {
+  text-decoration: none;
+  background: #fad46b;
+}
+
+/* base */
+.base {
+  font-size: 16px;
+  margin-top: 30px;
+  margin-bottom: 100px;
+}
+.base .row { margin-bottom: 15px; }
+.base .row .col-xs-12 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.base .row .col-xs-12 img {
+  height: 300px;
+  width: 300px;
+  border: #d6e1e5 solid 1px;
+  margin: 0 auto;
+}
+.base .row .col-xs-12 h2 { font-size: 24px; }
+.base a:hover { text-decoration: none; }
+
+/* login */
+#loginPassword {
+  font-family: 'Source Sans Pro', 'PT Sans', Arial, 'Helvetica Neue', Helvetica, Tahoma, sans-serif;
+  margin-bottom: 18px;
+  width: 300px;
+}
+#login .error {
+  color: indianred;
+  font-size: 16px;
+  margin: 60px 0 -78px;
+}
+
+/* cache-manager */
+#cache-manager .table tbody tr th,
+#cache-manager .table tbody tr td {
+  line-height: 37px;
+  padding: 15px;
+}
+#cache-manager .success { margin: -36px 0 18px; }
+
+/* generate-dao */
+#generate-dao-form .base,
+#generate-dao-form h2.top { margin-top: 0; }
+#generate-dao-form label {
+  font-family: UtsukushiMincho;
+  line-height: 18px;
+}
+#generate-dao-form .error,
+#generate-dao-form .error ul li {
+  margin-bottom: 10px;
+  color: indianred;
+  line-height: 16px;
+}
+#generate-dao-form input[type="submit"] { margin-top: 10px; }
+#generate-dao .featurette-heading { margin-top: 58px; }
+#generate-dao .lead { font-size: 17px; }
+#generate-dao .table tbody tr th,
+#generate-dao .table tbody tr td,
+#dao-deploy .table tbody tr th,
+#dao-deploy .table tbody tr td { padding: 15px; }
+
+/* performance-analyzer */
+#performance-analyzer .featurette-heading { margin-top: 58px; }
+#performance-analyzer .base,
+#performance-analyzer h2 { margin-top: 0; }
+#performance-analyzer pre { border-radius: 30px; }
+#performance-analyzer-install .error,
+#performance-analyzer-install .success {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+@media (max-width: 767px) {
+  #wrapper { padding: 50px 0 0; }
+  .logo { float: left; }
+  .logo img { margin-left: 20px; }
+  .logo a { font-size: 24px; }
+  #nav ul {
+    text-align: center;
+    opacity: 0.9;
+    margin-top: 14px;
+  }
+  #nav ul li, #nav ul li a { border: none; }
+  #nav ul li a:hover, #nav ul li.active a { color: #f3bc65; }
+  #nav .opener {
+    padding: 27px;
+    width: auto;
+    height: auto;
+  }
+  #nav .opener .bar1 { margin: 0; }
+  .featurette-heading {
+    font-size: 30px;
+    margin-top: 50px;
+  }
+  .lead { font-size: 16px; }
+  #page-top {
+    bottom: 20px;
+    right: 20px;
+  }
+  .base .row .col-xs-12 img {
+    height: 260px;
+    width: 260px;
+  }
+}

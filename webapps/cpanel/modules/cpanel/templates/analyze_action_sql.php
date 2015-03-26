@@ -80,7 +80,7 @@ $().ready( function () {
   <?php echo $form->close() ?>
   <?php echo $form->start() ?>
     <div class="action-sql-list">
-      <table id="tablesorter_action_sql_<?php echo $request->get('actionRequestId') ?>" class="tablesorter">
+      <table id="tablesorter_action_sql_<?php echo $request->get('actionRequestId') ?>" class="tablesorter table table-striped">
         <colgroup>
           <col width="10%" />
           <col width="52%" />

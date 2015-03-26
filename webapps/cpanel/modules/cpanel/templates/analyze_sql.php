@@ -17,7 +17,7 @@ $().ready( function () {
   <?php echo $form->start() ?>
     <div class="right"><?php echo $form->select($orderName, array('3' => '平均実行時間が長い', '2' => '実行回数が多い')) ?></p>
     <?php echo $form->inputHidden('type', array('value' => $request->get('type'))) ?>
-    <table id="tablesorter_sql_<?php echo $request->get('type') ?>" class="tablesorter">
+    <table id="tablesorter_sql_<?php echo $request->get('type') ?>" class="tablesorter table table-striped">
       <colgroup>
         <col width="8%" />
         <col width="42%" />

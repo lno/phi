@@ -8,11 +8,11 @@
     <p>データがありません。</p>
   <?php endif ?>
   <h2>テーブルサイズ</h2>
-  <table>
+  <table class="table table-striped">
     <tr>
       <th>テーブル</th>
       <th>レコード数</th>
-      <th>データサイズ</td>
+      <th>データサイズ</th>
     </tr>
     <?php foreach ($dataList as $tableName => $data): ?>
     <tr>

@@ -48,7 +48,7 @@ $(document).ready(function(){
 <?php $form->start() ?>
   <?php if (isset($statementInfo)): ?>
     <h2>ステートメント情報</h2>
-    <table>
+    <table class="table table-striped">
       <tr>
         <th>
           <?php if ($request->get('type') === 'prepared'): ?>

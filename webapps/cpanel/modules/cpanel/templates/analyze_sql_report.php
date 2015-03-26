@@ -26,7 +26,7 @@ $(document).ready(function(){
 </script>
 <?php if (sizeof($dailySummary)): ?>
   <div id="graph_report"></div>
-  <table id="tablesorter_sql_report" class="tablesorter">
+  <table id="tablesorter_sql_report" class="tablesorter table table-striped">
     <colgroup>
       <col width="16%" />
       <col width="12%" />
