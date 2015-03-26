@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>phi framework</title>
+<title>cPanel | phi framework</title>
 <meta name="description" content="The PHP Framework for web application." />
 <meta name="keywords" content="phi,framework,PHP" />
 <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
