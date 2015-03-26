@@ -9,7 +9,7 @@
         <div class="hidden-xs hidden-sm col-md-4"><img class="featurette-image img-responsive" alt="" src="/assets/base/phi/images/logo2.png"></div>
         <div class="col-xs-12 col-sm-8">
           <h2 class="featurette-heading">コントロール<span class="text-muted">パネル</span></h2>
-          <p class="lead">開発を支援する機能を多数備えており、コントロールパネルやコマンドラインから利用することができます。<br />代表的な機能を紹介します。</p>
+          <p class="lead">開発を支援する機能を利用することができます。<br /></p>
         </div>
       </div>
       <div class="base">
