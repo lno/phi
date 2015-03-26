@@ -6,7 +6,7 @@ class PerformanceAnalyzerUninstallAction extends PHI_Action
 {
   public function execute()
   {
-    $this->getObserver()->removeEventListener('PHI_PerformanceListener');
+    PHI_FrontController::getInstance()->getObserver()->removeEventListener('PHI_PerformanceListener');
     $dataSourceId = PHI_PerformanceListener::getDataSourceId();
 
     $conn = $this->getDatabase()->getConnection($dataSourceId);
