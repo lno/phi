@@ -78,6 +78,16 @@ class ArrayUtil
     }
   }
 
+  /**
+   * @param array $list
+   * @param $key
+   * @return bool
+   */
+  public static function hasKey(array $list, $key)
+  {
+    return array_key_exists($key, $list);
+  }
+
   public static function join(array $list, $delimiter = '')
   {
     return implode($delimiter, $list);
