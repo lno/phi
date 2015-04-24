@@ -28,7 +28,7 @@ class FileUtil
 
   public static function getFileName($filePath)
   {
-    return substr(strrchr($filePath, '/'), 1);
+    return substr(strrchr($filePath, DIRECTORY_SEPARATOR), 1);
   }
 
   public static function downloadSftpFile($savePath, $ftpFilePath, $host, $user, $password)
