@@ -13,33 +13,33 @@
         </div>
       </div>
       <div class="base">
-
-          <table class="table table-striped">
-            <colgroup>
-              <col width="15%">
-              <col width="85%">
-            </colgroup>
-              <tr>
-                <th class="left">エンティティ</th>
-                <td class="right">
-                <?php if ($entities->count()): ?>
-                  <?php echo $html->ul($entities) ?>
-                  <?php else: ?>
-              更新対象ファイルがありません。
-            <?php endif; ?>
-                  </td>
-              </tr>
-              <tr>
-                <th class="left">DAO</th>
-                <td class="right">
-                <?php if ($dataAccessObjects->count()): ?>
-                  <?php echo $html->ul($dataAccessObjects) ?>
-                  <?php else: ?>
-              更新対象ファイルがありません。
-            <?php endif; ?>
+        <table class="table table-striped">
+          <colgroup>
+            <col width="15%">
+            <col width="85%">
+          </colgroup>
+          <tr>
+            <th class="left">エンティティ</th>
+            <td class="right">
+              <?php if ($entities->count()): ?>
+                <?php echo $html->ul($entities) ?>
+              <?php else: ?>
+                更新対象ファイルがありません。
+              <?php endif; ?>
             </td>
-              </tr>
-          </table>
+          </tr>
+          <tr>
+            <th class="left">DAO</th>
+            <td class="right">
+              <?php if ($dataAccessObjects->count()): ?>
+                <?php echo $html->ul($dataAccessObjects) ?>
+              <?php else: ?>
+                更新対象ファイルがありません。
+              <?php endif; ?>
+            </td>
+          </tr>
+        </table>
+        <button class="btn" onclick="location.href='/cpanel/generateDAOForm.do';">戻る</button>
       </div>
     </div>
     <?php $html->includeTemplate('includes/footer'); ?>

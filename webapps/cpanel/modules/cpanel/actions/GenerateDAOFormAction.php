@@ -50,7 +50,7 @@ class GenerateDAOFormAction extends PHI_Action
       $form->set('baseEntityClassName', 'PHI_DatabaseEntity', FALSE);
 
     } catch (Exception $e) {
-      $this->getMessages()->addError($e->getMessage());
+      throw new PHI_ParseException('データベースへの接続時にエラーが発生しました。');
     }
 
     return PHI_View::SUCCESS;

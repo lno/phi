@@ -11,8 +11,8 @@
         <?php if (!strstr($_SERVER['REQUEST_URI'], 'login')): ?>
           <ul class="js-slide-hidden" style="display: none;">
             <li><?php echo $html->link('キャッシュ管理', 'CacheManager') ?></li>
-            <li><?php echo $html->link('パフォーマンスアナライザ', 'PerformanceAnalyzer') ?></li>
             <li><?php echo $html->link('DAOジェネレータ', 'GenerateDAOForm') ?></li>
+            <li><?php echo $html->link('パフォーマンスアナライザ', 'PerformanceAnalyzer') ?></li>
             <li><?php echo $html->link('ログアウト', 'Logout') ?></li>
           </ul>
         <?php endif; ?>

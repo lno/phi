@@ -22,14 +22,14 @@
             <p>クラスロードキャッシュ、テンプレートキャッシュ、コンフィグレーションキャッシュのうちいずれか、もしくは全てを削除することができます。</p>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-4">
-            <a href="/cpanel/performanceAnalyzer.do">
+            <a href="/cpanel/generateDAOForm.do">
               <img class="img-circle img-responsive" src="/assets/base/phi/images/screenshot/dao.png" alt="">
               <h2>DAOジェネレータ</h2>
             </a>
             <p>アプリケーションに設定されたデータベースを参照し、DAO・エンティティクラスを自動生成することができます。</p>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-4">
-            <a href="/cpanel/generateDAOForm.do">
+            <a href="/cpanel/performanceAnalyzer.do">
               <img class="img-circle img-responsive" src="/assets/base/phi/images/screenshot/performance_analyzer1.png" alt="">
               <h2>パフォーマンスアナライザ</h2>
             </a>
