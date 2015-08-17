@@ -67,6 +67,7 @@ abstract class PHI_DatabaseCommand extends PHI_Object
 
   /**
    * テーブルに定義されたプライマリキーを取得します。
+   * （※ PostgresSQL 非対応）
    *
    * @param string $tableName 対象テーブル。
    * @return array プライマリキーの一覧を配列で返します。
@@ -82,8 +83,10 @@ abstract class PHI_DatabaseCommand extends PHI_Object
     for ($i = 0; $i < $j; $i++) {
       $meta = $stmt->getColumnMeta($i);
 
-      if (in_array('primary_key', $meta['flags'])) {
-        $primaryKeys[] = $meta['name'];
+      if (isset($meta['flags'])) {
+        if (in_array('primary_key', $meta['flags'])) {
+          $primaryKeys[] = $meta['name'];
+        }
       }
     }
 

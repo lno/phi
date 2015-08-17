@@ -110,7 +110,7 @@ class PHI_HttpSession extends PHI_Object
     }
 
     ini_set('session.entropy_length', 32);
-    ini_set('session.hash_function', 'sha-256');
+    ini_set('session.hash_function', 'sha256');
 
     // セッション名の変更
     session_name($config->get('name'));

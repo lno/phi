@@ -207,6 +207,7 @@ class PHI_SQLProfiler extends PHI_Object
 
     $backtrace = debug_backtrace();
 
+    $index = 0;
     foreach ($backtrace as $index =>  $trace) {
       if (isset($trace['class']) && substr($trace['class'], 0, 6) !== 'PHI_') {
         break;
@@ -217,9 +218,15 @@ class PHI_SQLProfiler extends PHI_Object
       $report->className = $backtrace[$index]['class'];
     }
 
-    $report->fileName = $backtrace[$index - 1]['file'];
-    $report->methodName = $backtrace[$index]['function'];
-    $report->line = $backtrace[$index - 1]['line'];
+    if ($index > 0) {
+      $report->fileName = $backtrace[$index - 1]['file'];
+      $report->methodName = $backtrace[$index]['function'];
+      $report->line = $backtrace[$index - 1]['line'];
+    } else {
+      $report->fileName = $backtrace[0]['file'];
+      $report->methodName = $backtrace[0]['function'];
+      $report->line = $backtrace[0]['line'];
+    }
 
     return $report;
   }
