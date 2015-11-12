@@ -154,7 +154,12 @@ abstract class PHI_Pager extends PHI_Object
   protected function __construct()
   {
     $this->_request = PHI_FrontController::getInstance()->getRequest();
-    $this->_actionName = $this->_request->getRoute()->getForwardStack()->getLast()->getActionName();
+    if ($this->_request->getRoute()) {
+      $this->_actionName = $this->_request->getRoute()->getForwardStack()->getLast()->getActionName();
+    } else {
+      // TODO console からの実行時などは、ルート情報がないのでどうするか。
+      $this->_actionName = "";
+    }
 
     $this->_cipher = new PHI_BlowfishCipher();
     $this->_cipher->setInitializationVector('pager');
