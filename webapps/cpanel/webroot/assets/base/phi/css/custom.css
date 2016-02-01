@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'UtsukushiMincho';
-  src: url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.eot'); /* IE9ˆÈã—p */
-  src: url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.eot?#iefix') format('embedded-opentype'), /* IE8ˆÈ‘O—p */
-       url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.woff') format('woff'), /* ƒ‚ƒ_ƒ“ƒuƒ‰ƒEƒU—p */
-       url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.ttf') format('truetype'); /* iOS, Android—p */
+  src: url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.eot'); /* IE9ï¿½Èï¿½p */
+  src: url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.eot?#iefix') format('embedded-opentype'), /* IE8ï¿½È‘Oï¿½p */
+       url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.woff') format('woff'), /* ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½Eï¿½Uï¿½p */
+       url('/assets/base/phi/fonts/UtsukushiMincho-FONT/02UtsukushiMincho.ttf') format('truetype'); /* iOS, Androidï¿½p */
   font-weight: normal;
   font-style: normal;
 }
@@ -129,11 +129,25 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .btn { font-family: 
 #performance-analyzer .featurette-heading { margin-top: 58px; }
 #performance-analyzer .base,
 #performance-analyzer h2 { margin-top: 0; }
-#performance-analyzer pre { border-radius: 30px; }
+#performance-analyzer .base .form-control {
+  width: 120px;
+  display: inline;
+}
+#performance-analyzer .base select.form-control { width: 400px; }
+#performance-analyzer pre { border-radius: 10px; }
 #performance-analyzer-install .error,
 #performance-analyzer-install .success {
   font-size: 20px;
   line-height: 28px;
+}
+.ui-widget,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button{
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'UtsukushiMincho';
 }
 
 @media (max-width: 767px) {
