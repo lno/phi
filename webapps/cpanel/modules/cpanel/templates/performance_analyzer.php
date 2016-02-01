@@ -4,7 +4,7 @@
 <?php $html->includeTemplate('/includes/head'); ?>
 <?php echo $html->includeCSS('/assets/base/jquery-ui-1.8.16.custom/css/smoothness/jquery-ui-1.8.16.custom.css') ?>
 <?php echo $html->includeCSS('/assets/base/tablesorter/style.css') ?>
-<?php echo $html->includeCSS('/assets/base/phi/css/custom.css') ?>
+<?php //echo $html->includeCSS('/assets/base/phi/css/base.css') ?>
 <?php echo $html->includeCSS('/assets/base/phi/css/jquery_setup.css') ?>
 <?php echo $html->includeJS('/assets/base/jquery-ui-1.8.16.custom/js/jquery-1.6.2.min.js') ?>
 <?php echo $html->includeJS('/assets/base/jquery-ui-1.8.16.custom/js/jquery-ui-1.8.16.custom.min.js') ?>
@@ -26,10 +26,10 @@
       <div class="base">
         <?php echo $form->start() ?>
           <div class="search">
-            <?php echo $form->select('module', $modules, array('class' => 'form-control'), array('fieldTag' => '\1')) ?>
-            <?php echo $form->inputText('from', array('class' => 'form-control'), array('fieldTag' => '\1')) ?>
+            <?php echo $form->select('module', $modules, NULL, array('fieldTag' => '\1')) ?>
+            <?php echo $form->inputText('from', array('size' => 10), array('fieldTag' => '\1')) ?>
             ～
-            <?php echo $form->inputText('to', array('class' => 'form-control'), array('fieldTag' => '\1')) ?>
+            <?php echo $form->inputText('to', array('size' => 10), array('fieldTag' => '\1')) ?>
             <?php echo $form->inputSubmit('検索', array('name' => 'search', 'class' => 'btn')) ?>
           </div>
         <?php echo $form->close() ?>
