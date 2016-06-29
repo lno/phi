@@ -9,6 +9,11 @@ Class StringUtil
     return StringUtil::isEmpty($string) ? $alt : $string;
   }
 
+  public static function nval($string, $alt = '')
+  {
+    return StringUtil::get($string, $alt);
+  }
+
   /**
    * @param $string
    * @return bool
