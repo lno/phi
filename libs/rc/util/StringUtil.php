@@ -88,7 +88,11 @@ Class StringUtil
     if ($delimiter === NULL) {
       return str_split($string);
     } else {
-      return explode($delimiter, $string);
+      if (StringUtil::exists($string)) {
+        return explode($delimiter, $string);
+      } else {
+        return [];
+      }
     }
   }
 
