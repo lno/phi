@@ -9,6 +9,11 @@ Class StringUtil
     return StringUtil::isEmpty($string) ? $alt : $string;
   }
 
+  public static function nval($string, $alt = '')
+  {
+    return StringUtil::get($string, $alt);
+  }
+
   /**
    * @param $string
    * @return bool
@@ -83,7 +88,11 @@ Class StringUtil
     if ($delimiter === NULL) {
       return str_split($string);
     } else {
-      return explode($delimiter, $string);
+      if (StringUtil::exists($string)) {
+        return explode($delimiter, $string);
+      } else {
+        return [];
+      }
     }
   }
 
